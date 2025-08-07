@@ -10,41 +10,68 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Color greenColor;
     [SerializeField] private Color blueColor;
 
-    InputAction moveAction;
+    private InputAction moveAction;
     private Rigidbody2D rb;
+    private Animator animator;
+    private SpriteRenderer spriteRenderer;
 
     public static event Action<Vector3, string> OnColorSwtiched;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
+        animator = GetComponent<Animator>();
+        spriteRenderer = rb.GetComponent<SpriteRenderer>();
+
         moveAction = InputSystem.actions.FindAction("Move");
     }
 
     private void FixedUpdate()
     {
         Vector2 movement = moveAction.ReadValue<Vector2>();
+        UpdateAnimator(movement.x, movement.y);
+        FlipPlayer(movement.x);
         rb.linearVelocity = movement * moveSpeed;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        switch (collision.gameObject.name)
+        OnColorSwtiched?.Invoke(collision.transform.position, collision.name);
+        ChangePlayerColor(collision.name);
+    }
+
+    private void ChangePlayerColor(string color)
+    {
+        switch (color)
         {
             case "ColorRed":
-                gameObject.GetComponent<SpriteRenderer>().color = redColor;
-                OnColorSwtiched?.Invoke(collision.transform.position, "Red");
+                spriteRenderer.color = redColor;
                 break;
             case "ColorGreen":
-                gameObject.GetComponent<SpriteRenderer>().color = greenColor;
-                OnColorSwtiched?.Invoke(collision.transform.position, "Green");
+                spriteRenderer.color = greenColor;
                 break;
             case "ColorBlue":
-                gameObject.GetComponent<SpriteRenderer>().color = blueColor;
-                OnColorSwtiched?.Invoke(collision.transform.position, "Blue");
+                spriteRenderer.color = blueColor;
                 break;
         }
+    }
 
+    private void UpdateAnimator(float x, float y)
+    {
+        animator.SetFloat("x", Mathf.Abs(x));
+        animator.SetFloat("y", y);
+    }
+
+    private void FlipPlayer(float x)
+    {
+        if (x < -0.01)
+        {
+            spriteRenderer.flipX = true;
+        }
+        else
+        {
+            spriteRenderer.flipX = false;
+        }
     }
 
 }
