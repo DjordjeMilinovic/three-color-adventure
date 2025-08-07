@@ -14,20 +14,27 @@ public class PlayerController : MonoBehaviour
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
+    private bool goalReached;
 
     public static event Action<Vector3, string> OnColorSwtiched;
+    public static event Action OnGoalReached;
 
     private void Start()
     {
         rb = GetComponent<Rigidbody2D>();
         animator = GetComponent<Animator>();
         spriteRenderer = rb.GetComponent<SpriteRenderer>();
+        goalReached = false;
 
         moveAction = InputSystem.actions.FindAction("Move");
     }
 
     private void FixedUpdate()
     {
+        if (goalReached)
+        {
+            return;
+        }
         Vector2 movement = moveAction.ReadValue<Vector2>();
         UpdateAnimator(movement.x, movement.y);
         FlipPlayer(movement.x);
@@ -36,6 +43,11 @@ public class PlayerController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
+        if (collision.CompareTag("Goal"))
+        {
+            GoalReached();
+            return;
+        }
         OnColorSwtiched?.Invoke(collision.transform.position, collision.name);
         ChangePlayerColor(collision.name);
     }
@@ -72,6 +84,15 @@ public class PlayerController : MonoBehaviour
         {
             spriteRenderer.flipX = false;
         }
+    }
+
+    private void GoalReached()
+    {
+        goalReached = true;
+        spriteRenderer.color = Color.white;
+        UpdateAnimator(0f, 0f);
+        rb.linearVelocity = Vector2.zero;
+        OnGoalReached?.Invoke();
     }
 
 }
