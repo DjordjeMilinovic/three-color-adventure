@@ -1,19 +1,34 @@
 using System;
 using System.Drawing;
+using Unity.VisualScripting;
 using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class WallManager : MonoBehaviour
 {
+    public static WallManager Instance { get; private set; }
+
     [SerializeField] private GameObject RedWalls;
     [SerializeField] private GameObject GreenWalls;
     [SerializeField] private GameObject BlueWalls;
 
-    private string currentColor;
-    //Mora da se doda brojac za satove ako ih ima vise istih boja
+    public string currentColor;
+    //Mora da se doda brojac za satove ako ih ima vise istih boja ili da se ima posebna klasa za brojanje koja je za to zaduzena
 
     // 0 red, 1 green, 2 blue
     private bool[] activeClocks = { false, false, false };
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this);
+        }
+        else
+        {
+            Instance = this;
+        }
+    }
 
     private void Start()
     {
@@ -47,16 +62,16 @@ public class WallManager : MonoBehaviour
 
 
         switch (color)
-        { 
-            case "ColorRed":
+        {
+            case "Red":
                 RedWalls.gameObject.SetActive(false);
                 activeClocks[0] = false;
                 break;
-            case "ColorGreen":
+            case "Green":
                 GreenWalls.gameObject.SetActive(false);
                 activeClocks[1] = false;
                 break;
-            case "ColorBlue":
+            case "Blue":
                 BlueWalls.gameObject.SetActive(false);
                 activeClocks[2] = false;
                 break;
@@ -66,29 +81,21 @@ public class WallManager : MonoBehaviour
 
     private void OnClockCollected(Vector3 position, string color)
     {
+        if (currentColor.Equals(color))
+        {
+            return;
+        }
         switch (color)
         {
-            case "ClockRed":
-                if (currentColor.Equals("ColorRed"))
-                {
-                    return;
-                }
+            case "Red":
                 activeClocks[0] = true;
                 RedWalls.gameObject.SetActive(false);
                 break;
-            case "ClockGreen":
-                if (currentColor.Equals("ColorGreen"))
-                {
-                    return;
-                }
+            case "Green":
                 activeClocks[1] = true;
                 GreenWalls.gameObject.SetActive(false);
                 break;
-            case "ClockBlue":
-                if (currentColor.Equals("ColorBlue"))
-                {
-                    return;
-                }
+            case "Blue":
                 activeClocks[2] = true;
                 BlueWalls.gameObject.SetActive(false);
                 break;
@@ -99,17 +106,17 @@ public class WallManager : MonoBehaviour
     {
         switch (clockColor)
         {
-            case "ClockRed":
+            case "Red":
                 if (!activeClocks[0]) return;
                 activeClocks[0] = false;
                 RedWalls.gameObject.SetActive(true);
                 break;
-            case "ClockGreen":
+            case "Green":
                 if (!activeClocks[1]) return;
                 activeClocks[1] = false;
                 GreenWalls.gameObject.SetActive(true);
                 break;
-            case "ClockBlue":
+            case "Blue":
                 if (!activeClocks[2]) return;
                 activeClocks[2] = false;
                 BlueWalls.gameObject.SetActive(true);
@@ -122,5 +129,6 @@ public class WallManager : MonoBehaviour
     {
         PlayerController.OnColorSwtiched -= OnColorSwitched;
         PlayerController.OnClockCollected -= OnClockCollected;
+        ClockSwitch.OnClockExpired -= OnClockExpired;
     }
 }

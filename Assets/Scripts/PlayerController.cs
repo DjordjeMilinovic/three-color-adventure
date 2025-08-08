@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Tilemaps;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
@@ -10,11 +10,14 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Color greenColor;
     [SerializeField] private Color blueColor;
 
-    private InputAction moveAction;
     private Rigidbody2D rb;
     private Animator animator;
     private SpriteRenderer spriteRenderer;
     private bool goalReached;
+
+
+    private InputAction moveAction;
+    private InputAction restartAction;
 
     public static event Action<Vector3, string> OnColorSwtiched;
     public static event Action<Vector3, string> OnClockCollected;
@@ -28,7 +31,10 @@ public class PlayerController : MonoBehaviour
         goalReached = false;
 
         moveAction = InputSystem.actions.FindAction("Move");
+        restartAction = InputSystem.actions.FindAction("Restart");
+        restartAction.performed += RestartLevel;
     }
+
 
     private void FixedUpdate()
     {
@@ -49,27 +55,56 @@ public class PlayerController : MonoBehaviour
             GoalReached();
             return;
         }
-        if (collision.CompareTag("ColorSwitch")) {
-            OnColorSwtiched?.Invoke(collision.transform.position, collision.name);
-            ChangePlayerColor(collision.name);
+        if (collision.CompareTag("ColorSwitch"))
+        {
+            string color = "";
+            switch (collision.name)
+            {
+                case "ColorRed":
+                    color = "Red";
+                    break;
+                case "ColorGreen":
+                    color = "Green";
+                    break;
+                case "ColorBlue":
+                    color = "Blue";
+                    break;
+            }
+            OnColorSwtiched?.Invoke(collision.transform.position, color);
+            ChangePlayerColor(color);
         }
         if (collision.CompareTag("ClockSwitch"))
         {
-            OnClockCollected?.Invoke(collision.transform.position, collision.name);
+            string color = "";
+            switch (collision.name)
+            {
+                case "ClockRed":
+                    color = "Red";
+                    break;
+                case "ClockGreen":
+                    color = "Green";
+                    break;
+                case "ClockBlue":
+                    color = "Blue";
+                    break;
+            }
+            OnClockCollected?.Invoke(collision.transform.position, color);
         }
     }
 
     private void ChangePlayerColor(string color)
     {
+        Debug.Log("ChangePlayerColor " + color);
+
         switch (color)
         {
-            case "ColorRed":
+            case "Red":
                 spriteRenderer.color = redColor;
                 break;
-            case "ColorGreen":
+            case "Green":
                 spriteRenderer.color = greenColor;
                 break;
-            case "ColorBlue":
+            case "Blue":
                 spriteRenderer.color = blueColor;
                 break;
         }
@@ -102,4 +137,13 @@ public class PlayerController : MonoBehaviour
         OnGoalReached?.Invoke();
     }
 
+    private void RestartLevel(InputAction.CallbackContext context)
+    {
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    private void OnDisable()
+    {
+        restartAction.performed -= RestartLevel;
+    }
 }

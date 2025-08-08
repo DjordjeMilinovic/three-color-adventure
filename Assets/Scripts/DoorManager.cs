@@ -19,4 +19,10 @@ public class DoorManager : MonoBehaviour
         openDoor.SetActive(true);
         closedDoor.SetActive(false);
     }
+
+    private void OnDisable()
+    {
+
+        KeyManager.OnKeyCollected -= OnKeyCollected;
+    }
 }

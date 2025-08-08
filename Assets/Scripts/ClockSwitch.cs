@@ -9,6 +9,8 @@ public class ClockSwitch : MonoBehaviour
     private AudioSource audioSource;
     private Collider2D col;
     private SpriteRenderer spriteRenderer;
+    private float clockTime = 4f;
+    private string color;
 
     private Color[] colors = { new Color(0.9294118f, 0.1098039f, 0.1411765f), new Color(0.1333333f, 0.6941177f, 0.2980392f), new Color(0f, 0.6352941f, 0.9058824f) };
 
@@ -21,12 +23,29 @@ public class ClockSwitch : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         PlayerController.OnClockCollected += OnClockCollected;
+    
+        switch(spriteRenderer.name)
+        {
+            case "ClockRed":
+                color = "Red";
+                break;
+            case "ClockGreen":
+                color = "Green";
+                break;
+            case "ClockBlue":
+                color = "Blue";
+                break;
+        }
     }
 
     private void OnClockCollected(Vector3 position, string color)
     {
+        //ako je igrac vec te boje ignorisi
+        
+
         if (transform.position.Equals(position))
         {
+            //Pokreni zid tajmer
             col.enabled = false;
             Color spriteColor = spriteRenderer.color;
             spriteColor.a = 0f;
@@ -34,7 +53,7 @@ public class ClockSwitch : MonoBehaviour
 
             audioSource.PlayOneShot(clockSound);
 
-            Invoke(nameof(ResetClock), 5f);
+            Invoke(nameof(ResetClock), clockTime);
         }
     }
 
@@ -45,7 +64,8 @@ public class ClockSwitch : MonoBehaviour
         spriteColor.a = 1f;
         spriteRenderer.color = spriteColor;
 
-        OnClockExpired?.Invoke(spriteRenderer.name);
+        OnClockExpired?.Invoke(color);
+        Debug.Log("Rekao stop");
     }
 
     private void OnDisable()

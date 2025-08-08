@@ -225,7 +225,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d230c33a22d84fa44847ba48d02a5ec4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: LevelOne
+  nextScene: TutorialThree
 --- !u!1 &489578273
 GameObject:
   m_ObjectHideFlags: 0
@@ -4667,6 +4667,7 @@ MonoBehaviour:
   RedWalls: {fileID: 1701556838}
   GreenWalls: {fileID: 873958049}
   BlueWalls: {fileID: 1103670058}
+  currentColor: 
 --- !u!4 &1930063686
 Transform:
   m_ObjectHideFlags: 0
@@ -4897,5 +4898,5 @@ SceneRoots:
   - {fileID: 805933814}
   - {fileID: 6157319596370509121}
   - {fileID: 1930063686}
-  - {fileID: 417086894}
   - {fileID: 489578276}
+  - {fileID: 417086894}
