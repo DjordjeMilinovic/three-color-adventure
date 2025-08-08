@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     private bool goalReached;
 
     public static event Action<Vector3, string> OnColorSwtiched;
+    public static event Action<Vector3, string> OnClockCollected;
     public static event Action OnGoalReached;
 
     private void Start()
@@ -48,8 +49,14 @@ public class PlayerController : MonoBehaviour
             GoalReached();
             return;
         }
-        OnColorSwtiched?.Invoke(collision.transform.position, collision.name);
-        ChangePlayerColor(collision.name);
+        if (collision.CompareTag("ColorSwitch")) {
+            OnColorSwtiched?.Invoke(collision.transform.position, collision.name);
+            ChangePlayerColor(collision.name);
+        }
+        if (collision.CompareTag("ClockSwitch"))
+        {
+            OnClockCollected?.Invoke(collision.transform.position, collision.name);
+        }
     }
 
     private void ChangePlayerColor(string color)

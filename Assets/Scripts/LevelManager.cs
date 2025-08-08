@@ -13,7 +13,12 @@ public class LevelManager : MonoBehaviour
 
     private void OnGoalReached()
     {
-        Debug.Log("Next scene lets goo!");
-        //SceneManager.LoadScene(nextScene);
+        if (nextScene == null || nextScene.Equals("")) { return; }
+        SceneManager.LoadScene(nextScene);
+    }
+
+    private void OnDisable()
+    {
+        PlayerController.OnGoalReached -= OnGoalReached;
     }
 }
