@@ -2,20 +2,16 @@ using UnityEngine;
 
 public class ColorSwitchController : MonoBehaviour
 {
-
-    [SerializeField] private AudioClip splashSoundClip;
     [SerializeField] private ParticleSystem colorSplashPrefab;
 
     private Color[] colors = { new Color(0.9294118f, 0.1098039f, 0.1411765f), new Color(0.1333333f, 0.6941177f, 0.2980392f), new Color(0f, 0.6352941f, 0.9058824f) };
 
-    private AudioSource audioSource;
     private Collider2D col;
     private SpriteRenderer spriteRenderer;
     private ParticleSystem colorSplashInstance;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         col = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -47,7 +43,6 @@ public class ColorSwitchController : MonoBehaviour
             spriteColor.a = 0f;
             spriteRenderer.color = spriteColor;
 
-            audioSource.PlayOneShot(splashSoundClip);
             colorSplashInstance.Play();
         }
         else

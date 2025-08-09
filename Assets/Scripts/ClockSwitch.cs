@@ -3,9 +3,6 @@ using UnityEngine;
 
 public class ClockSwitch : MonoBehaviour
 {
-    [SerializeField] private AudioClip clockSound;
-
-    private AudioSource audioSource;
     private Collider2D col;
     private SpriteRenderer spriteRenderer;
     private float clockTime = 3f;
@@ -17,7 +14,6 @@ public class ClockSwitch : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
         col = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
 
@@ -52,9 +48,6 @@ public class ClockSwitch : MonoBehaviour
             Color spriteColor = spriteRenderer.color;
             spriteColor.a = 0f;
             spriteRenderer.color = spriteColor;
-
-            audioSource.PlayOneShot(clockSound);
-
             Invoke(nameof(ResetClock), clockTime);
         }
     }
@@ -65,7 +58,6 @@ public class ClockSwitch : MonoBehaviour
         Color spriteColor = spriteRenderer.color;
         spriteColor.a = 1f;
         spriteRenderer.color = spriteColor;
-        audioSource.PlayOneShot(clockSound);
         OnClockExpired?.Invoke(color);
     }
 

@@ -6,15 +6,11 @@ public class LevelSceneManager : MonoBehaviour
     [SerializeField] private Button[] tutorialButtons;
     [SerializeField] private Button[] levelButtons;
     [SerializeField] private Button backButton;
-    [SerializeField] private AudioClip clickSound;
     [SerializeField] private LevelManager levelManager;
 
-    private AudioSource audioSource;
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
-
         for (int i = 0; i < tutorialButtons.Length; i++)
         {
             int index = i;
@@ -33,7 +29,6 @@ public class LevelSceneManager : MonoBehaviour
         }
         backButton.onClick.AddListener(() =>
         {
-            audioSource.PlayOneShot(clickSound);
             levelManager.SetNextScene("MainMenu");
             levelManager.LoadNextScene();
         });
@@ -41,7 +36,6 @@ public class LevelSceneManager : MonoBehaviour
 
     private void LoadTutorial(int i)
     {
-        audioSource.PlayOneShot(clickSound);
         string sceneName = "Tutorial" + (i + 1);
         levelManager.SetNextScene(sceneName);
         levelManager.LoadNextScene();
@@ -49,7 +43,6 @@ public class LevelSceneManager : MonoBehaviour
 
     private void LoadLevel(int i)
     {
-        audioSource.PlayOneShot(clickSound);
         string sceneName = "Level" + (i + 1);
         levelManager.SetNextScene(sceneName);
         levelManager.LoadNextScene();

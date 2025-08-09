@@ -1,0 +1,88 @@
+using System;
+using UnityEngine;
+using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
+public class EscapeMenuManager : MonoBehaviour
+{
+    public static EscapeMenuManager Instance { get; private set; }
+
+    [SerializeField] private Button menuButton;
+    [SerializeField] private Button exitButton;
+
+    private CanvasGroup canvasGroup;
+    private InputAction EscClick;
+    private bool isVisible;
+
+
+    private void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+        }
+        else
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+    }
+
+    private void Start()
+    {
+        isVisible = false;
+        canvasGroup = GetComponent<CanvasGroup>();
+
+        menuButton.onClick.AddListener(() =>
+        {
+            HideEscMenu();
+            LevelManager levelManager = FindFirstObjectByType<LevelManager>();
+            levelManager.SetNextScene("MainMenu");
+            levelManager.LoadNextScene();
+            Destroy(gameObject);
+        });
+
+        exitButton.onClick.AddListener(() =>
+        {
+            Application.Quit();
+        });
+
+        EscClick = InputSystem.actions.FindAction("EscClick");
+        EscClick.performed += ToggleEscMenu;
+    }
+
+    private void ToggleEscMenu(InputAction.CallbackContext context)
+    {
+        string currentScene = SceneManager.GetActiveScene().name;
+        if (currentScene.Equals("MainMenu") || currentScene.Equals("Levels"))
+        {
+            return;
+        }
+
+        if (isVisible)
+        {
+            HideEscMenu();
+        }
+        else
+        {
+            ShowEscMenu();
+        }
+    }
+
+    private void HideEscMenu()
+    {
+        Time.timeScale = 1f;
+        canvasGroup.alpha = 0f;
+        canvasGroup.blocksRaycasts = false;
+        isVisible = false;
+    }
+
+    private void ShowEscMenu()
+    {
+        Time.timeScale = 0f;
+        canvasGroup.alpha += 1f;
+        canvasGroup.blocksRaycasts = true;
+        isVisible = true;
+    }
+}

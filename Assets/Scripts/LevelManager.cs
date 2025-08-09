@@ -14,7 +14,10 @@ public class LevelManager : MonoBehaviour
 
     private void OnGoalReached()
     {
-        if (nextScene == null || nextScene.Equals("")) { return; }
+        if (nextScene == null || nextScene.Equals(""))
+        {
+            return;
+        }
         LoadNextScene();
     }
 
