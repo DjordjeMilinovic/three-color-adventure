@@ -65,7 +65,7 @@ public class ClockSwitch : MonoBehaviour
         Color spriteColor = spriteRenderer.color;
         spriteColor.a = 1f;
         spriteRenderer.color = spriteColor;
-
+        audioSource.PlayOneShot(clockSound);
         OnClockExpired?.Invoke(color);
     }
 
