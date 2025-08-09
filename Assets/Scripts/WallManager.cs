@@ -1,4 +1,8 @@
+using NUnit.Framework;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Tilemaps;
 
 public class WallManager : MonoBehaviour
 {
@@ -45,15 +49,15 @@ public class WallManager : MonoBehaviour
 
         if (!activeClocks[0])
         {
-            EnableWalls(RedWalls);
+            EnableWalls(RedWalls, false);
         }
         if (!activeClocks[1])
         {
-            EnableWalls(GreenWalls);
+            EnableWalls(GreenWalls, false);
         }
         if (!activeClocks[2])
         {
-            EnableWalls(BlueWalls);
+            EnableWalls(BlueWalls, false);
         }
 
 
@@ -105,24 +109,63 @@ public class WallManager : MonoBehaviour
             case "Red":
                 if (!activeClocks[0]) return;
                 activeClocks[0] = false;
-                EnableWalls(RedWalls);
+                EnableWalls(RedWalls, true);
                 break;
             case "Green":
                 if (!activeClocks[1]) return;
                 activeClocks[1] = false;
-                EnableWalls(GreenWalls);
+                EnableWalls(GreenWalls, true);
                 break;
             case "Blue":
                 if (!activeClocks[2]) return;
                 activeClocks[2] = false;
-                EnableWalls(BlueWalls);
+                EnableWalls(BlueWalls, true);
                 break;
         }
     }
 
-    private void EnableWalls(GameObject walls)
+    private void EnableWalls(GameObject walls, bool isClockSwitch)
     {
         walls.SetActive(true);
+        if (isClockSwitch)
+        {
+            StartCoroutine(WaitPlayerExist(walls));
+        }
+    }
+
+    IEnumerator WaitPlayerExist(GameObject walls)
+    {
+        TilemapCollider2D tilemap = walls.GetComponent<TilemapCollider2D>();
+        List<Collider2D> results = new List<Collider2D>();
+        Tilemap map = walls.GetComponent<Tilemap>();
+        Color tileColor = map.color;
+        tileColor.a = 0.5f;
+        map.color = tileColor;
+        bool isPlayerInside = false;
+        while (true)
+        {
+            tilemap.enabled = true;
+            tilemap.composite.Overlap(results);
+            tilemap.enabled = false;
+            foreach (Collider2D col in results)
+            {
+                if (col.CompareTag("Player"))
+                {
+                    isPlayerInside = true;
+                    break;
+                }
+            }
+            if (!isPlayerInside)
+            {
+                tilemap.enabled = true;
+                tileColor.a = 1f;
+                map.color = tileColor;
+                break;
+            }
+            isPlayerInside = false;
+            yield return new WaitForSeconds(0.05f);
+        }
+
     }
 
     private void DisableWalls(GameObject walls)
@@ -136,5 +179,6 @@ public class WallManager : MonoBehaviour
         PlayerController.OnColorSwtiched -= OnColorSwitched;
         PlayerController.OnClockCollected -= OnClockCollected;
         ClockSwitch.OnClockExpired -= OnClockExpired;
+        StopAllCoroutines();
     }
 }
