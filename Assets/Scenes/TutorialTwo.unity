@@ -808,7 +808,7 @@ GameObject:
   - component: {fileID: 873958055}
   - component: {fileID: 873958054}
   - component: {fileID: 873958053}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: GreenWallsTIlemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3111,7 +3111,7 @@ GameObject:
   - component: {fileID: 1103670064}
   - component: {fileID: 1103670063}
   - component: {fileID: 1103670062}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: BlueWallsTIlemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3948,7 +3948,7 @@ GameObject:
   - component: {fileID: 1701556844}
   - component: {fileID: 1701556843}
   - component: {fileID: 1701556842}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: RedWallsTIlemap
   m_TagString: Untagged
   m_Icon: {fileID: 0}

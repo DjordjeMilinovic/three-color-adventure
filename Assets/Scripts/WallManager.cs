@@ -1,7 +1,3 @@
-using System;
-using System.Drawing;
-using Unity.VisualScripting;
-using Unity.VisualScripting.Antlr3.Runtime.Tree;
 using UnityEngine;
 
 public class WallManager : MonoBehaviour
@@ -49,30 +45,30 @@ public class WallManager : MonoBehaviour
 
         if (!activeClocks[0])
         {
-            RedWalls.SetActive(true);
+            EnableWalls(RedWalls);
         }
         if (!activeClocks[1])
         {
-            GreenWalls.SetActive(true);
+            EnableWalls(GreenWalls);
         }
         if (!activeClocks[2])
         {
-            BlueWalls.SetActive(true);
+            EnableWalls(BlueWalls);
         }
 
 
         switch (color)
         {
             case "Red":
-                RedWalls.gameObject.SetActive(false);
+                DisableWalls(RedWalls);
                 activeClocks[0] = false;
                 break;
             case "Green":
-                GreenWalls.gameObject.SetActive(false);
+                DisableWalls(GreenWalls);
                 activeClocks[1] = false;
                 break;
             case "Blue":
-                BlueWalls.gameObject.SetActive(false);
+                DisableWalls(BlueWalls);
                 activeClocks[2] = false;
                 break;
         }
@@ -89,15 +85,15 @@ public class WallManager : MonoBehaviour
         {
             case "Red":
                 activeClocks[0] = true;
-                RedWalls.gameObject.SetActive(false);
+                DisableWalls(RedWalls);
                 break;
             case "Green":
                 activeClocks[1] = true;
-                GreenWalls.gameObject.SetActive(false);
+                DisableWalls(GreenWalls);
                 break;
             case "Blue":
                 activeClocks[2] = true;
-                BlueWalls.gameObject.SetActive(false);
+                DisableWalls(BlueWalls);
                 break;
         }
     }
@@ -109,19 +105,29 @@ public class WallManager : MonoBehaviour
             case "Red":
                 if (!activeClocks[0]) return;
                 activeClocks[0] = false;
-                RedWalls.gameObject.SetActive(true);
+                EnableWalls(RedWalls);
                 break;
             case "Green":
                 if (!activeClocks[1]) return;
                 activeClocks[1] = false;
-                GreenWalls.gameObject.SetActive(true);
+                EnableWalls(GreenWalls);
                 break;
             case "Blue":
                 if (!activeClocks[2]) return;
                 activeClocks[2] = false;
-                BlueWalls.gameObject.SetActive(true);
+                EnableWalls(BlueWalls);
                 break;
         }
+    }
+
+    private void EnableWalls(GameObject walls)
+    {
+        walls.SetActive(true);
+    }
+
+    private void DisableWalls(GameObject walls)
+    {
+        walls.SetActive(false);
     }
 
 

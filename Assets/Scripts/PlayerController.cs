@@ -94,8 +94,6 @@ public class PlayerController : MonoBehaviour
 
     private void ChangePlayerColor(string color)
     {
-        Debug.Log("ChangePlayerColor " + color);
-
         switch (color)
         {
             case "Red":
