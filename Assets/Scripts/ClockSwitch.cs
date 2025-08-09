@@ -22,8 +22,8 @@ public class ClockSwitch : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         PlayerController.OnClockCollected += OnClockCollected;
-    
-        switch(spriteRenderer.name)
+
+        switch (spriteRenderer.name)
         {
             case "ClockRed":
                 color = "Red";
@@ -40,7 +40,10 @@ public class ClockSwitch : MonoBehaviour
     private void OnClockCollected(Vector3 position, string color)
     {
         //ako je igrac vec te boje ignorisi
-        
+        if (WallManager.Instance.currentColor.Equals(color))
+        {
+            return;
+        }
 
         if (transform.position.Equals(position))
         {
