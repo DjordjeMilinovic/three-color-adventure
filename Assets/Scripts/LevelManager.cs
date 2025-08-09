@@ -24,7 +24,7 @@ public class LevelManager : MonoBehaviour
     IEnumerator PlayAnimation(string nextScene)
     {
         animator.SetTrigger("StartFadeAnimation");
-        yield return new WaitForSeconds(.5f);
+        yield return new WaitForSeconds(.35f);
         SceneManager.LoadScene(nextScene);
     }
 

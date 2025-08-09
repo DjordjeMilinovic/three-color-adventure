@@ -137,7 +137,9 @@ public class PlayerController : MonoBehaviour
 
     private void RestartLevel(InputAction.CallbackContext context)
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        LevelManager levelManager = FindFirstObjectByType<LevelManager>();
+        levelManager.SetNextScene(SceneManager.GetActiveScene().name);
+        levelManager.LoadNextScene();
     }
 
     private void OnDisable()
