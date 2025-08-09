@@ -5,7 +5,6 @@ using UnityEngine.SceneManagement;
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private string nextScene;
-
     [SerializeField] private Animator animator;
 
     private void Start()
@@ -16,12 +15,7 @@ public class LevelManager : MonoBehaviour
     private void OnGoalReached()
     {
         if (nextScene == null || nextScene.Equals("")) { return; }
-        LoadNextLevel(nextScene);
-    }
-
-    private void LoadNextLevel(string nextScene)
-    {
-        StartCoroutine(PlayAnimation(nextScene));
+        LoadNextScene();
     }
 
     IEnumerator PlayAnimation(string nextScene)
@@ -29,6 +23,16 @@ public class LevelManager : MonoBehaviour
         animator.SetTrigger("StartFadeAnimation");
         yield return new WaitForSeconds(.5f);
         SceneManager.LoadScene(nextScene);
+    }
+
+    public void SetNextScene(string nextScene)
+    {
+        this.nextScene = nextScene;
+    }
+
+    public void LoadNextScene()
+    {
+        StartCoroutine(PlayAnimation(nextScene));
     }
 
     private void OnDisable()
