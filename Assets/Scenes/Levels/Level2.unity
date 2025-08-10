@@ -521,7 +521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5731943808889736814, guid: 3936421fa6d179a4ebf0d20f68dd1de5, type: 3}
       propertyPath: nextScene
-      value: MainMenu
+      value: Level3
       objectReference: {fileID: 0}
     - target: {fileID: 6728007800485931741, guid: 3936421fa6d179a4ebf0d20f68dd1de5, type: 3}
       propertyPath: m_LocalPosition.x

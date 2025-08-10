@@ -5,12 +5,20 @@ public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
 
+    public static event Action<bool> OnAudioManagerMusicToggle;
+    public static event Action<bool> OnAudioManagerSoundToggle;
+
+    [SerializeField] private AudioClip music;
     [SerializeField] private AudioClip buttonClick;
     [SerializeField] private AudioClip colorSplashSound;
     [SerializeField] private AudioClip clockSound;
     [SerializeField] private AudioClip doorSound;
 
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource musicAudioSource;
+    [SerializeField] private AudioSource soundAudioSource;
+
+    private static bool isMusicMuted;
+    private static bool isSoundMuted;
 
     private void Awake()
     {
@@ -27,30 +35,82 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        audioSource = GetComponent<AudioSource>();
+        musicAudioSource.volume = .4f;
+        soundAudioSource.volume = 1f;
 
+        musicAudioSource.loop = true;
+        musicAudioSource.clip = music;
+        musicAudioSource.Play();
+
+        MainMenuManager.OnToggleSound += OnToggleSound;
+        MainMenuManager.OnToggleMusic += OnToggleMusic;
+        EscapeMenuManager.OnToggleSound += OnToggleSound;
+        EscapeMenuManager.OnToggleMusic += OnToggleMusic;
         PlayerController.OnClockCollected += OnClockCollected;
         PlayerController.OnColorSwtiched += OnColorSwitched;
-
         ButtonClick.OnButtonClicked += OnButtonClicked;
-
         KeyManager.OnKeyCollected += OnKeyCollected;
     }
+
+    private void OnToggleMusic()
+    {
+        isMusicMuted = !isMusicMuted;
+        if (isMusicMuted)
+        {
+            musicAudioSource.Pause();
+        }
+        else
+        {
+            musicAudioSource.UnPause();
+        }
+        OnAudioManagerMusicToggle?.Invoke(isMusicMuted);
+    }
+
+    private void OnToggleSound()
+    {
+        isSoundMuted = !isSoundMuted;
+        OnAudioManagerSoundToggle?.Invoke(isSoundMuted);
+    }
+
     private void OnClockCollected(Vector3 vector, string color)
     {
-        audioSource.PlayOneShot(clockSound);
+        if (isSoundMuted)
+        {
+            return;
+        }
+        soundAudioSource.PlayOneShot(clockSound);
     }
     private void OnColorSwitched(Vector3 vector, string arg2)
     {
-        audioSource.PlayOneShot(colorSplashSound);
+        if (isSoundMuted)
+        {
+            return;
+        }
+        soundAudioSource.PlayOneShot(colorSplashSound);
     }
     private void OnButtonClicked()
     {
-        audioSource.PlayOneShot(buttonClick);
+        if (isSoundMuted)
+        {
+            return;
+        }
+        soundAudioSource.PlayOneShot(buttonClick);
     }
     private void OnKeyCollected()
     {
-        audioSource.PlayOneShot(doorSound);
+        if (isSoundMuted)
+        {
+            return;
+        }
+        soundAudioSource.PlayOneShot(doorSound);
     }
 
+    public static bool GetIsMusicMuted()
+    {
+        return isMusicMuted;
+    }
+    public static bool GetIsSoundMuted()
+    {
+        return isSoundMuted;
+    }
 }

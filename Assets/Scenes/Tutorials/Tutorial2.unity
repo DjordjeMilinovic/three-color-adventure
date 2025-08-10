@@ -3520,7 +3520,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "2. \nCollect colored clocks to temporarily disable walls of the same color"
+  m_text: "2. \nCollect clocks to temporarily disable walls of the same color"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98932bae1db65e84da0be6353ae65027, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 8242f01324502d449b1517c38cffb53c, type: 2}
@@ -5382,7 +5382,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Clocks work only if their color differs from yours
+  m_text: 'Clocks can''t be collecter if player''s color matches the clock''s color '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 98932bae1db65e84da0be6353ae65027, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 8242f01324502d449b1517c38cffb53c, type: 2}

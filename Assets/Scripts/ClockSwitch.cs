@@ -1,13 +1,9 @@
-using System;
-using System.Collections;
 using UnityEngine;
 
 public class ClockSwitch : MonoBehaviour
 {
     private Collider2D col;
     private SpriteRenderer spriteRenderer;
-    private string color;
-    private Color[] colors = { new Color(0.9294118f, 0.1098039f, 0.1411765f), new Color(0.1333333f, 0.6941177f, 0.2980392f), new Color(0f, 0.6352941f, 0.9058824f) };
 
     private void Start()
     {
@@ -16,19 +12,6 @@ public class ClockSwitch : MonoBehaviour
 
         PlayerController.OnClockCollected += OnClockCollected;
         ClockWipeController.OnClockExpired += OnClockExpired;
-
-        switch (spriteRenderer.name)
-        {
-            case "ClockRed":
-                color = "Red";
-                break;
-            case "ClockGreen":
-                color = "Green";
-                break;
-            case "ClockBlue":
-                color = "Blue";
-                break;
-        }
     }
 
     private void OnClockCollected(Vector3 position, string color)
@@ -73,6 +56,5 @@ public class ClockSwitch : MonoBehaviour
     {
         PlayerController.OnClockCollected -= OnClockCollected;
         ClockWipeController.OnClockExpired -= OnClockExpired;
-
     }
 }

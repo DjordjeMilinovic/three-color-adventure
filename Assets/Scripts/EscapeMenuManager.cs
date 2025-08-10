@@ -8,13 +8,18 @@ public class EscapeMenuManager : MonoBehaviour
 {
     public static EscapeMenuManager Instance { get; private set; }
 
+    public static event Action OnToggleMusic;
+    public static event Action OnToggleSound;
+
+    [SerializeField] private Button restartButton;
     [SerializeField] private Button menuButton;
+    [SerializeField] private Button musicButton;
+    [SerializeField] private Button soundButton;
     [SerializeField] private Button exitButton;
 
     private CanvasGroup canvasGroup;
     private InputAction EscClick;
     private bool isVisible;
-
 
     private void Awake()
     {
@@ -34,15 +39,30 @@ public class EscapeMenuManager : MonoBehaviour
         isVisible = false;
         canvasGroup = GetComponent<CanvasGroup>();
 
+        restartButton.onClick.AddListener(() =>
+        {
+            HideEscMenu();
+            LevelManager levelManager = FindFirstObjectByType<LevelManager>();
+            levelManager.SetNextScene(SceneManager.GetActiveScene().name);
+            levelManager.LoadNextScene();
+            //Destroy(gameObject);
+        });
         menuButton.onClick.AddListener(() =>
         {
             HideEscMenu();
             LevelManager levelManager = FindFirstObjectByType<LevelManager>();
             levelManager.SetNextScene("MainMenu");
             levelManager.LoadNextScene();
-            Destroy(gameObject);
+            //Destroy(gameObject);
         });
-
+        musicButton.onClick.AddListener(() =>
+        {
+            OnToggleMusic?.Invoke();
+        });
+        soundButton.onClick.AddListener(() =>
+        {
+            OnToggleSound?.Invoke();
+        });
         exitButton.onClick.AddListener(() =>
         {
             Application.Quit();
@@ -50,12 +70,14 @@ public class EscapeMenuManager : MonoBehaviour
 
         EscClick = InputSystem.actions.FindAction("EscClick");
         EscClick.performed += ToggleEscMenu;
+        AudioManager.OnAudioManagerMusicToggle += OnAudioManagerMusicToggle;
+        AudioManager.OnAudioManagerSoundToggle += OnAudioManagerSoundToggle;
     }
 
     private void ToggleEscMenu(InputAction.CallbackContext context)
     {
         string currentScene = SceneManager.GetActiveScene().name;
-        if (currentScene.Equals("MainMenu") || currentScene.Equals("Levels"))
+        if (currentScene.Equals("MainMenu") || currentScene.Equals("Levels") || currentScene.Equals("Rules"))
         {
             return;
         }
@@ -86,8 +108,56 @@ public class EscapeMenuManager : MonoBehaviour
         isVisible = true;
     }
 
+
+
+
+    private void OnAudioManagerMusicToggle(bool isMuted)
+    {
+        ToggleMusic(isMuted);
+    }
+
+    private void OnAudioManagerSoundToggle(bool isMuted)
+    {
+        ToggleSound(isMuted);
+    }
+
+    private void ToggleMusic(bool isMuted)
+    {
+        Image image = musicButton.GetComponent<Image>();
+        Color color = image.color;
+        if (isMuted)
+        {
+            color.a = .6f;
+        }
+        else
+        {
+            color.a = 1f;
+        }
+        image.color = color;
+    }
+
+    private void ToggleSound(bool isMuted)
+    {
+        Image image = soundButton.GetComponent<Image>();
+        Color color = image.color;
+        if (isMuted)
+        {
+            color.a = .6f;
+        }
+        else
+        {
+            color.a = 1f;
+        }
+        image.color = color;
+    }
+
     private void OnDisable()
     {
-        EscClick.performed -= ToggleEscMenu;
+        if (EscClick != null)
+        {
+            EscClick.performed -= ToggleEscMenu;
+        }
+        AudioManager.OnAudioManagerMusicToggle -= OnAudioManagerMusicToggle;
+        AudioManager.OnAudioManagerSoundToggle -= OnAudioManagerSoundToggle;
     }
 }
