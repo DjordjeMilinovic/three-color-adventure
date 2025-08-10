@@ -85,4 +85,9 @@ public class EscapeMenuManager : MonoBehaviour
         canvasGroup.blocksRaycasts = true;
         isVisible = true;
     }
+
+    private void OnDisable()
+    {
+        EscClick.performed -= ToggleEscMenu;
+    }
 }
