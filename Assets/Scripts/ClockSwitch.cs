@@ -1,16 +1,13 @@
 using System;
+using System.Collections;
 using UnityEngine;
 
 public class ClockSwitch : MonoBehaviour
 {
     private Collider2D col;
     private SpriteRenderer spriteRenderer;
-    private float clockTime = 3f;
     private string color;
-
     private Color[] colors = { new Color(0.9294118f, 0.1098039f, 0.1411765f), new Color(0.1333333f, 0.6941177f, 0.2980392f), new Color(0f, 0.6352941f, 0.9058824f) };
-
-    public static event Action<string> OnClockExpired;
 
     private void Start()
     {
@@ -18,6 +15,7 @@ public class ClockSwitch : MonoBehaviour
         spriteRenderer = GetComponent<SpriteRenderer>();
 
         PlayerController.OnClockCollected += OnClockCollected;
+        ClockWipeController.OnClockExpired += OnClockExpired;
 
         switch (spriteRenderer.name)
         {
@@ -48,8 +46,17 @@ public class ClockSwitch : MonoBehaviour
             Color spriteColor = spriteRenderer.color;
             spriteColor.a = 0f;
             spriteRenderer.color = spriteColor;
-            Invoke(nameof(ResetClock), clockTime);
         }
+    }
+
+
+    private void OnClockExpired(Vector3 position, string color)
+    {
+        if (!transform.position.Equals(position))
+        {
+            return;
+        }
+        ResetClock();
     }
 
     private void ResetClock()
@@ -58,11 +65,14 @@ public class ClockSwitch : MonoBehaviour
         Color spriteColor = spriteRenderer.color;
         spriteColor.a = 1f;
         spriteRenderer.color = spriteColor;
-        OnClockExpired?.Invoke(color);
     }
+
+
 
     private void OnDisable()
     {
         PlayerController.OnClockCollected -= OnClockCollected;
+        ClockWipeController.OnClockExpired -= OnClockExpired;
+
     }
 }

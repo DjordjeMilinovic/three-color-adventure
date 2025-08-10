@@ -34,7 +34,7 @@ public class WallManager : MonoBehaviour
     {
         PlayerController.OnColorSwtiched += OnColorSwitched;
         PlayerController.OnClockCollected += OnClockCollected;
-        ClockSwitch.OnClockExpired += OnClockExpired;
+        ClockWipeController.OnClockExpired += OnClockExpired;
         currentColor = "";
     }
 
@@ -81,10 +81,6 @@ public class WallManager : MonoBehaviour
 
     private void OnClockCollected(Vector3 position, string color)
     {
-        if (currentColor.Equals(color))
-        {
-            return;
-        }
         switch (color)
         {
             case "Red":
@@ -102,7 +98,7 @@ public class WallManager : MonoBehaviour
         }
     }
 
-    private void OnClockExpired(string clockColor)
+    private void OnClockExpired(Vector3 position, string clockColor)
     {
         switch (clockColor)
         {
@@ -178,7 +174,7 @@ public class WallManager : MonoBehaviour
     {
         PlayerController.OnColorSwtiched -= OnColorSwitched;
         PlayerController.OnClockCollected -= OnClockCollected;
-        ClockSwitch.OnClockExpired -= OnClockExpired;
+        ClockWipeController.OnClockExpired -= OnClockExpired;
         StopAllCoroutines();
     }
 }

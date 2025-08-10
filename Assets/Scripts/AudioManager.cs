@@ -29,8 +29,6 @@ public class AudioManager : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
 
-        ClockSwitch.OnClockExpired += OnClockExpired;
-
         PlayerController.OnClockCollected += OnClockCollected;
         PlayerController.OnColorSwtiched += OnColorSwitched;
 
@@ -38,17 +36,8 @@ public class AudioManager : MonoBehaviour
 
         KeyManager.OnKeyCollected += OnKeyCollected;
     }
-
-    private void OnClockExpired(string obj)
-    {
-        audioSource.PlayOneShot(clockSound);
-    }
     private void OnClockCollected(Vector3 vector, string color)
     {
-        if (WallManager.Instance.currentColor.Equals(color))
-        {
-            return;
-        }
         audioSource.PlayOneShot(clockSound);
     }
     private void OnColorSwitched(Vector3 vector, string arg2)

@@ -88,6 +88,10 @@ public class PlayerController : MonoBehaviour
                     color = "Blue";
                     break;
             }
+            if (WallManager.Instance.currentColor.Equals(color))
+            {
+                return;
+            }
             OnClockCollected?.Invoke(collision.transform.position, color);
         }
     }

@@ -1060,7 +1060,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   menuButton: {fileID: 1412321951}
   exitButton: {fileID: 432006076}
-  clickSound: {fileID: 8300000, guid: 191d1a942f3088a42b44f8eb5c6492c1, type: 3}
 --- !u!225 &560680910
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -3410,6 +3409,67 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1001 &1636446706
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1263152305938140437, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5866700311641019379, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_Name
+      value: ClockGreen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7557093110427381761, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
+      propertyPath: m_SortingOrder
+      value: 100
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: af1d45815f59b3443bcf643d39472e3a, type: 3}
 --- !u!1 &1788729350
 GameObject:
   m_ObjectHideFlags: 0
@@ -3604,7 +3664,6 @@ MonoBehaviour:
   playButton: {fileID: 1506868834}
   levelsButton: {fileID: 1133252023}
   exitButton: {fileID: 32699565}
-  clickSound: {fileID: 8300000, guid: 191d1a942f3088a42b44f8eb5c6492c1, type: 3}
   levelManager: {fileID: 226763892}
 --- !u!82 &1800853891
 AudioSource:
@@ -3967,3 +4026,4 @@ SceneRoots:
   - {fileID: 1800853889}
   - {fileID: 560680908}
   - {fileID: 1788729352}
+  - {fileID: 1636446706}
