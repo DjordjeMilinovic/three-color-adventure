@@ -7,15 +7,13 @@ using UnityEngine.Tilemaps;
 public class WallManager : MonoBehaviour
 {
     public static WallManager Instance { get; private set; }
+    public string currentColor;
 
     [SerializeField] private GameObject RedWalls;
     [SerializeField] private GameObject GreenWalls;
     [SerializeField] private GameObject BlueWalls;
 
-    public string currentColor;
-    //Mora da se doda brojac za satove ako ih ima vise istih boja ili da se ima posebna klasa za brojanje koja je za to zaduzena
-
-    // 0 red, 1 green, 2 blue
+    // Rd, Green, Blue
     private bool[] activeClocks = { false, false, false };
 
     private void Awake()
@@ -32,10 +30,10 @@ public class WallManager : MonoBehaviour
 
     private void Start()
     {
+        currentColor = "";
         PlayerController.OnColorSwtiched += OnColorSwitched;
         PlayerController.OnClockCollected += OnClockCollected;
         ClockWipeController.OnClockExpired += OnClockExpired;
-        currentColor = "";
     }
 
     private void OnColorSwitched(Vector3 position, string color)
@@ -60,7 +58,6 @@ public class WallManager : MonoBehaviour
             EnableWalls(BlueWalls, false);
         }
 
-
         switch (color)
         {
             case "Red":
@@ -77,7 +74,6 @@ public class WallManager : MonoBehaviour
                 break;
         }
     }
-
 
     private void OnClockCollected(Vector3 position, string color)
     {
@@ -125,18 +121,18 @@ public class WallManager : MonoBehaviour
         walls.SetActive(true);
         if (isClockSwitch)
         {
-            StartCoroutine(WaitPlayerExist(walls));
+            StartCoroutine(WaitForPlayerExit(walls));
         }
     }
 
-    IEnumerator WaitPlayerExist(GameObject walls)
+    IEnumerator WaitForPlayerExit(GameObject walls)
     {
         TilemapCollider2D tilemap = walls.GetComponent<TilemapCollider2D>();
-        List<Collider2D> results = new List<Collider2D>();
         Tilemap map = walls.GetComponent<Tilemap>();
         Color tileColor = map.color;
         tileColor.a = 0.5f;
         map.color = tileColor;
+        List<Collider2D> results = new List<Collider2D>();
         bool isPlayerInside = false;
         while (true)
         {
@@ -161,7 +157,6 @@ public class WallManager : MonoBehaviour
             isPlayerInside = false;
             yield return new WaitForSeconds(0.05f);
         }
-
     }
 
     private void DisableWalls(GameObject walls)

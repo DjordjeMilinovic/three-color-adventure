@@ -4,7 +4,7 @@ using UnityEngine.UI;
 
 public class ButtonClick : MonoBehaviour
 {
-    public static Action OnButtonClicked;
+    public static event Action OnButtonClicked;
     private void Start()
     {
         gameObject.GetComponent<Button>().onClick.AddListener(() =>

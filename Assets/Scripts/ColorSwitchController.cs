@@ -4,8 +4,11 @@ public class ColorSwitchController : MonoBehaviour
 {
     [SerializeField] private ParticleSystem colorSplashPrefab;
 
-    private Color[] colors = { new Color(0.9294118f, 0.1098039f, 0.1411765f), new Color(0.1333333f, 0.6941177f, 0.2980392f), new Color(0f, 0.6352941f, 0.9058824f) };
-
+    private Color[] colors = {
+        new Color(0.9294118f, 0.1098039f, 0.1411765f),
+        new Color(0.1333333f, 0.6941177f, 0.2980392f),
+        new Color(0f, 0.6352941f, 0.9058824f)
+    };
     private Collider2D col;
     private SpriteRenderer spriteRenderer;
     private ParticleSystem colorSplashInstance;
@@ -14,9 +17,7 @@ public class ColorSwitchController : MonoBehaviour
     {
         col = GetComponent<Collider2D>();
         spriteRenderer = GetComponent<SpriteRenderer>();
-
         colorSplashInstance = Instantiate(colorSplashPrefab, transform.position, Quaternion.identity, transform);
-
         PlayerController.OnColorSwtiched += OnColorSwitched;
 
         var main = colorSplashInstance.main;
@@ -38,20 +39,29 @@ public class ColorSwitchController : MonoBehaviour
     {
         if (transform.position.Equals(position))
         {
-            col.enabled = false;
-            Color spriteColor = spriteRenderer.color;
-            spriteColor.a = 0f;
-            spriteRenderer.color = spriteColor;
-
+            HideColor();
             colorSplashInstance.Play();
         }
         else
         {
-            col.enabled = true;
-            Color spriteColor = spriteRenderer.color;
-            spriteColor.a = 1f;
-            spriteRenderer.color = spriteColor;
+            ShowColor();
         }
+    }
+
+    private void HideColor()
+    {
+        col.enabled = false;
+        Color spriteColor = spriteRenderer.color;
+        spriteColor.a = 0f;
+        spriteRenderer.color = spriteColor;
+    }
+
+    private void ShowColor()
+    {
+        col.enabled = true;
+        Color spriteColor = spriteRenderer.color;
+        spriteColor.a = 1f;
+        spriteRenderer.color = spriteColor;
     }
 
     private void OnDisable()

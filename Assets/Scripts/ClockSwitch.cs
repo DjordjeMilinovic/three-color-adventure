@@ -16,7 +16,6 @@ public class ClockSwitch : MonoBehaviour
 
     private void OnClockCollected(Vector3 position, string color)
     {
-        //ako je igrac vec te boje ignorisi
         if (WallManager.Instance.currentColor.Equals(color))
         {
             return;
@@ -24,14 +23,9 @@ public class ClockSwitch : MonoBehaviour
 
         if (transform.position.Equals(position))
         {
-            //Pokreni zid tajmer
-            col.enabled = false;
-            Color spriteColor = spriteRenderer.color;
-            spriteColor.a = 0f;
-            spriteRenderer.color = spriteColor;
+            HideClock();
         }
     }
-
 
     private void OnClockExpired(Vector3 position, string color)
     {
@@ -39,18 +33,24 @@ public class ClockSwitch : MonoBehaviour
         {
             return;
         }
-        ResetClock();
+        ShowClock();
     }
 
-    private void ResetClock()
+    private void HideClock()
+    {
+        col.enabled = false;
+        Color spriteColor = spriteRenderer.color;
+        spriteColor.a = 0f;
+        spriteRenderer.color = spriteColor;
+    }
+
+    private void ShowClock()
     {
         col.enabled = true;
         Color spriteColor = spriteRenderer.color;
         spriteColor.a = 1f;
         spriteRenderer.color = spriteColor;
     }
-
-
 
     private void OnDisable()
     {

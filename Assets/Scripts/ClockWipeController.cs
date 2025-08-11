@@ -1,5 +1,4 @@
 using System;
-using System.Drawing;
 using UnityEngine;
 
 public class ClockWipeController : MonoBehaviour
@@ -8,7 +7,7 @@ public class ClockWipeController : MonoBehaviour
 
     [SerializeField] private string color;
     [SerializeField] private Animator animator;
-    private Vector3 position;
+    private Vector3 collectedClockPosition;
 
     private void Start()
     {
@@ -23,7 +22,7 @@ public class ClockWipeController : MonoBehaviour
             return;
         }
         animator.Play("NoWipe");
-        OnClockExpired?.Invoke(this.position, color);
+        OnClockExpired?.Invoke(this.collectedClockPosition, color);
     }
 
     private void OnClockCollected(Vector3 position, string color)
@@ -32,14 +31,14 @@ public class ClockWipeController : MonoBehaviour
         {
             return;
         }
-        this.position = position;
+        this.collectedClockPosition = position;
         animator.SetTrigger("StartWipe");
     }
 
     // Clock wipe animation event
     private void ClockExpired()
     {
-        OnClockExpired?.Invoke(position, color);
+        OnClockExpired?.Invoke(collectedClockPosition, color);
     }
 
 

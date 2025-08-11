@@ -1,6 +1,5 @@
 using System;
 using UnityEngine;
-
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance { get; private set; }
@@ -13,7 +12,6 @@ public class AudioManager : MonoBehaviour
     [SerializeField] private AudioClip colorSplashSound;
     [SerializeField] private AudioClip clockSound;
     [SerializeField] private AudioClip doorSound;
-
     [SerializeField] private AudioSource musicAudioSource;
     [SerializeField] private AudioSource soundAudioSource;
 
@@ -35,8 +33,8 @@ public class AudioManager : MonoBehaviour
 
     private void Start()
     {
-        musicAudioSource.volume = .4f;
-        soundAudioSource.volume = 1f;
+        musicAudioSource.volume = .25f;
+        soundAudioSource.volume = .8f;
 
         musicAudioSource.loop = true;
         musicAudioSource.clip = music;

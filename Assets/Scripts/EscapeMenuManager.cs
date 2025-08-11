@@ -45,7 +45,6 @@ public class EscapeMenuManager : MonoBehaviour
             LevelManager levelManager = FindFirstObjectByType<LevelManager>();
             levelManager.SetNextScene(SceneManager.GetActiveScene().name);
             levelManager.LoadNextScene();
-            //Destroy(gameObject);
         });
         menuButton.onClick.AddListener(() =>
         {
@@ -53,7 +52,6 @@ public class EscapeMenuManager : MonoBehaviour
             LevelManager levelManager = FindFirstObjectByType<LevelManager>();
             levelManager.SetNextScene("MainMenu");
             levelManager.LoadNextScene();
-            //Destroy(gameObject);
         });
         musicButton.onClick.AddListener(() =>
         {
@@ -107,9 +105,6 @@ public class EscapeMenuManager : MonoBehaviour
         canvasGroup.blocksRaycasts = true;
         isVisible = true;
     }
-
-
-
 
     private void OnAudioManagerMusicToggle(bool isMuted)
     {

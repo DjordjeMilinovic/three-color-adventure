@@ -5,7 +5,11 @@ using UnityEngine.SceneManagement;
 
 public class PlayerController : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 4f;
+    public static event Action<Vector3, string> OnColorSwtiched;
+    public static event Action<Vector3, string> OnClockCollected;
+    public static event Action OnGoalReached;
+
+    [SerializeField] private float moveSpeed = 3.5f;
     [SerializeField] private Color redColor;
     [SerializeField] private Color greenColor;
     [SerializeField] private Color blueColor;
@@ -15,13 +19,8 @@ public class PlayerController : MonoBehaviour
     private SpriteRenderer spriteRenderer;
     private bool goalReached;
 
-
     private InputAction moveAction;
     private InputAction restartAction;
-
-    public static event Action<Vector3, string> OnColorSwtiched;
-    public static event Action<Vector3, string> OnClockCollected;
-    public static event Action OnGoalReached;
 
     private void Start()
     {

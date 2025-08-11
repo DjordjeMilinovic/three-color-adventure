@@ -8,7 +8,6 @@ public class LevelSceneManager : MonoBehaviour
     [SerializeField] private Button backButton;
     [SerializeField] private LevelManager levelManager;
 
-
     private void Start()
     {
         for (int i = 0; i < tutorialButtons.Length; i++)

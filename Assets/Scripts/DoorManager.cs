@@ -9,7 +9,6 @@ public class DoorManager : MonoBehaviour
     {
         openDoor.SetActive(false);
         closedDoor.SetActive(true);
-
         KeyManager.OnKeyCollected += OnKeyCollected;
     }
 
@@ -21,7 +20,6 @@ public class DoorManager : MonoBehaviour
 
     private void OnDisable()
     {
-
         KeyManager.OnKeyCollected -= OnKeyCollected;
     }
 }

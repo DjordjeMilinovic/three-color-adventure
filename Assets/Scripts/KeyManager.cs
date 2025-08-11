@@ -3,9 +3,9 @@ using UnityEngine;
 
 public class KeyManager : MonoBehaviour
 {
-    private Collider2D col;
+        public static event Action OnKeyCollected;
 
-    public static event Action OnKeyCollected;
+    private Collider2D col;
 
     private void Start()
     {
@@ -16,9 +16,9 @@ public class KeyManager : MonoBehaviour
     {
         if (collision.CompareTag("Player"))
         {
-            OnKeyCollected?.Invoke();
             col.enabled = false;
             gameObject.GetComponent<SpriteRenderer>().enabled = false;
+            OnKeyCollected?.Invoke();
         }
     }
 }
