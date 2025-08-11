@@ -13,5 +13,5 @@ Good luck!
 - Esc - Pause the game
 
 ## Links
-- Itch play link - to be determined
-- Itch submission page - to be determined
+- [Play on Itch.io](https://djoxon.itch.io/three-color-adventure)
+- [Two Desperados Game Jam 2025 Submission Page](https://itch.io/jam/two-desperados-game-jam-2025/rate/3804623)
